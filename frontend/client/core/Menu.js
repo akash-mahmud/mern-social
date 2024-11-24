@@ -39,8 +39,8 @@ const Menu = withRouter(({history}) => (
       }
       {
         auth.isAuthenticated() && (<span>
-          <Link to={"/user/" + auth.isAuthenticated().user._id}>
-            <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
+          <Link to={"/user/" + auth.isAuthenticated().user?._id}>
+            <Button style={isActive(history, "/user/" + auth.isAuthenticated().user?._id)}>My Profile</Button>
           </Link>
           <Button color="inherit" onClick={() => {
               auth.clearJWT(() => history.push('/'))

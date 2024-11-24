@@ -1,140 +1,149 @@
+import axiosRequest from "../utils/axiosRequest";
+
 const create = async (params, credentials, post) => {
   try {
-    let response = await fetch('/api/posts/new/'+ params.userId, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
-      },
-      body: post
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+    let response = await axiosRequest.post(
+      "/api/posts/new/" + params.userId,
+      { post },
+      {
+        headers: {
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const listByUser = async (params, credentials) => {
   try {
-    let response = await fetch('/api/posts/by/'+ params.userId, {
-      method: 'GET',
+    let response = await axiosRequest.get("/api/posts/by/" + params.userId, {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
-      }
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const listNewsFeed = async (params, credentials, signal) => {
   try {
-    let response = await fetch('/api/posts/feed/'+ params.userId, {
-      method: 'GET',
+    let response = await axiosRequest.get("/api/posts/feed/" + params.userId, {
+      method: "GET",
       signal: signal,
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
-      }
-    })    
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const remove = async (params, credentials) => {
   try {
-    let response = await fetch('/api/posts/' + params.postId, {
-      method: 'DELETE',
+    let response = await axiosRequest.delete("/api/posts/" + params.postId, {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
-      }
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
 
 const like = async (params, credentials, postId) => {
   try {
-    let response = await fetch('/api/posts/like/', {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
+    let response = await axiosRequest.put(
+      "/api/posts/like/",
+      {
+        userId: params.userId,
+        postId: postId,
       },
-      body: JSON.stringify({userId:params.userId, postId: postId})
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
 
 const unlike = async (params, credentials, postId) => {
   try {
-    let response = await fetch('/api/posts/unlike/', {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
+    let response = await axiosRequest.put(
+      "/api/posts/unlike/",
+      {
+        userId: params.userId,
+        postId: postId,
       },
-      body: JSON.stringify({userId:params.userId, postId: postId})
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+      {
+        headers: {
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
 
 const comment = async (params, credentials, postId, comment) => {
   try {
-    let response = await fetch('/api/posts/comment/', {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
+    let response = await axiosRequest.put(
+      "/api/posts/comment/",
+      {
+        userId: params.userId,
+        postId: postId,
+        comment: comment,
       },
-      body: JSON.stringify({userId:params.userId, postId: postId, comment: comment})
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
 
 const uncomment = async (params, credentials, postId, comment) => {
   try {
-    let response = await fetch('/api/posts/uncomment/', {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + credentials.t
+    let response = await axiosRequest.put(
+      "/api/posts/uncomment/",
+      {
+        userId: params.userId,
+        postId: postId,
+        comment: comment,
       },
-      body: JSON.stringify({userId:params.userId, postId: postId, comment: comment})
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+      {
+        headers: {
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
 
 export {
   listNewsFeed,
@@ -144,5 +153,5 @@ export {
   like,
   unlike,
   comment,
-  uncomment
-}
+  uncomment,
+};

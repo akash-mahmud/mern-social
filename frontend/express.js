@@ -23,7 +23,12 @@ import devBundle from "./devBundle";
 
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
-
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors({
+  origin:["http://localhost:3000", "http://localhost:8000"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 //comment out before building for production
 devBundle.compile(app);
 
@@ -35,7 +40,6 @@ app.use(compress());
 // secure apps by setting various HTTP headers
 app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
-app.use(cors());
 
 app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 

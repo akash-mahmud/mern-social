@@ -1,30 +1,23 @@
+import axios from "axios";
+import axiosRequest from "../utils/axiosRequest";
+
 const signin = async (user) => {
   try {
-    let response = await fetch('/auth/signin/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(user)
-    })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+    let response = await axiosRequest.post("/auth/signin", user);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const signout = async () => {
   try {
-    let response = await fetch('/auth/signout/', { method: 'GET' })
-    return await response.json()
-  } catch(err) {
-    console.log(err)
+    let response = await axiosRequest.get("/auth/signout/");
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
-export {
-  signin,
-  signout
-}
+export { signin, signout };
