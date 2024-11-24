@@ -20,4 +20,4 @@ const App = () => {
   </BrowserRouter>
 )}
 
-export default hot(module)(App)
+export default hot(module)(App) 
