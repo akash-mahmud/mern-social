@@ -1,0 +1,25 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://206.189.248.140:8080
+functions:
+  auth-function:
+    lang: dockerfile
+    handler: ./auth-functions
+    image: mahmudakash177/auth-routes:latest
+    imagePullPolicy: Always
+  user-function:
+    lang: dockerfile
+    handler: ./user-functions
+    image: mahmudakash177/user-routes:latest
+    imagePullPolicy: Always    
+  post-function:
+    lang: dockerfile
+    handler: ./post-functions
+    image: mahmudakash177/post-routes:latest
+    imagePullPolicy: Always    
+  frontend-function:
+    lang: dockerfile
+    handler: ./frontend-function
+    image: mahmudakash177/frontend-function:latest
+    imagePullPolicy: Always    

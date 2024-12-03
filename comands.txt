@@ -1,0 +1,5 @@
+kubectl get all -n openfaas 
+kubectl get pods -n openfaas-fn 
+docker buildx build --platform linux/amd64,linux/arm64 -t mahmudakash177/auth-routes:latest --push .
+kubectl describe pod [pod name] -n openfaas-fn
+kubectl scale deploy appfleet-hello-world  --replicas=0 -n openfaas-fn
