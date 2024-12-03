@@ -11,11 +11,15 @@ const bodyParser = require("body-parser");
 const authCtrl = require('./function/controllers/auth.controller');
 const { connectToDatabase } = require("./function/models");
 const defaultMaxSize = "100kb"; // body-parser default
-
+const cors = require("cors")
+app.use(cors({
+  origin:["http://localhost:3000" , "http://localhost:8000"]
+}));
 app.disable("x-powered-by");
 
 const rawLimit = process.env.MAX_RAW_SIZE || defaultMaxSize;
 const jsonLimit = process.env.MAX_JSON_SIZE || defaultMaxSize;
+
 
 app.use(function addDefaultContentType(req, res, next) {
   // When no content-type is given, the body element is set to

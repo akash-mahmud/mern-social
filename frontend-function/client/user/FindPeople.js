@@ -50,17 +50,14 @@ export default function FindPeople() {
   const jwt = auth.isAuthenticated();
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
     findPeople(
       {
         userId: jwt.user._id,
       },
       {
         t: jwt.token,
-      },
-      signal
+      }
+      // signal
     ).then((data) => {
       if (data && data.error) {
         console.log(data.error);
@@ -68,8 +65,9 @@ export default function FindPeople() {
         setValues({ ...values, users: data });
       }
     });
-    return function cleanup() {
-      abortController.abort();
+
+    return () => {
+      // No cleanup here, request will continue even if the component unmounts
     };
   }, []);
   const clickFollow = (user, index) => {
@@ -111,7 +109,7 @@ export default function FindPeople() {
               <span key={i}>
                 <ListItem>
                   <ListItemAvatar className={classes.avatar}>
-                    <Avatar src={"/api/users/photo/" + item._id} />
+                    <Avatar src={"/users/photo/" + item._id} />
                   </ListItemAvatar>
                   <ListItemText primary={item.name} />
                   <ListItemSecondaryAction className={classes.follow}>

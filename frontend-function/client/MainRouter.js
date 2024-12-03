@@ -12,7 +12,7 @@ import Menu from './core/Menu'
 const MainRouter = () => {
     return (<div>
       <Menu/>
-      <Switch>
+      <Switch b>
         <Route exact path="/" component={Home}/>
         <Route path="/users" component={Users}/>
         <Route path="/signup" component={Signup}/>

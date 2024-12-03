@@ -119,8 +119,8 @@ export default function Profile({ match }) {
   };
 
   const photoUrl = values.user._id
-    ? `/api/users/photo/${values.user._id}?${new Date().getTime()}`
-    : "/api/users/defaultphoto";
+    ? `users/photo/${values.user._id}?${new Date().getTime()}`
+    : "/users/defaultphoto";
   if (values.redirectToSignin) {
     return <Redirect to="/signin" />;
   }

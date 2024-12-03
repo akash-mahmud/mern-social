@@ -6,7 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Icon from "@material-ui/core/Icon";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { comment, uncomment } from "./api-post.js";
+import { comment, uncomment } from "./Post";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -114,7 +114,7 @@ export default function Comments(props) {
         avatar={
           <Avatar
             className={classes.smallAvatar}
-            src={"/api/users/photo/" + auth.isAuthenticated().user._id}
+            src={"/users/photo/" + auth.isAuthenticated().user._id}
           />
         }
         title={
@@ -136,7 +136,7 @@ export default function Comments(props) {
             avatar={
               <Avatar
                 className={classes.smallAvatar}
-                src={"/api/users/photo/" + item.postedBy._id}
+                src={"/users/photo/" + item.postedBy._id}
               />
             }
             title={commentBody(item)}

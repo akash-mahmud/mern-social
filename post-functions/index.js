@@ -17,7 +17,10 @@ app.disable("x-powered-by");
 
 const rawLimit = process.env.MAX_RAW_SIZE || defaultMaxSize;
 const jsonLimit = process.env.MAX_JSON_SIZE || defaultMaxSize;
-
+const cors = require("cors")
+app.use(cors({
+  origin:["http://localhost:3000" , "http://localhost:8000"]
+}));
 app.use(function addDefaultContentType(req, res, next) {
   // When no content-type is given, the body element is set to
   // nil, and has been a source of contention for new users.

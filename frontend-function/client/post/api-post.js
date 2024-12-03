@@ -3,8 +3,8 @@ import axiosRequest from "../utils/axiosRequest";
 const create = async (params, credentials, post) => {
   try {
     let response = await axiosRequest.post(
-      "/api/posts/new/" + params.userId,
-      { post },
+      "/posts/new/" + params.userId,
+      { ...post },
       {
         headers: {
           Authorization: "Bearer " + credentials.t,
@@ -20,7 +20,7 @@ const create = async (params, credentials, post) => {
 
 const listByUser = async (params, credentials) => {
   try {
-    let response = await axiosRequest.get("/api/posts/by/" + params.userId, {
+    let response = await axiosRequest.get("/posts/by/" + params.userId, {
       headers: {
         Authorization: "Bearer " + credentials.t,
       },
@@ -33,9 +33,8 @@ const listByUser = async (params, credentials) => {
 
 const listNewsFeed = async (params, credentials, signal) => {
   try {
-    let response = await axiosRequest.get("/api/posts/feed/" + params.userId, {
-      method: "GET",
-      signal: signal,
+    let response = await axiosRequest.get("/posts/feed/" + params.userId, {
+      // signal: signal,
       headers: {
         Authorization: "Bearer " + credentials.t,
       },
@@ -48,7 +47,7 @@ const listNewsFeed = async (params, credentials, signal) => {
 
 const remove = async (params, credentials) => {
   try {
-    let response = await axiosRequest.delete("/api/posts/" + params.postId, {
+    let response = await axiosRequest.delete("/posts/" + params.postId, {
       headers: {
         Authorization: "Bearer " + credentials.t,
       },
@@ -62,7 +61,7 @@ const remove = async (params, credentials) => {
 const like = async (params, credentials, postId) => {
   try {
     let response = await axiosRequest.put(
-      "/api/posts/like/",
+      "/posts/like/",
       {
         userId: params.userId,
         postId: postId,
@@ -84,7 +83,7 @@ const like = async (params, credentials, postId) => {
 const unlike = async (params, credentials, postId) => {
   try {
     let response = await axiosRequest.put(
-      "/api/posts/unlike/",
+      "/posts/unlike/",
       {
         userId: params.userId,
         postId: postId,
@@ -104,7 +103,7 @@ const unlike = async (params, credentials, postId) => {
 const comment = async (params, credentials, postId, comment) => {
   try {
     let response = await axiosRequest.put(
-      "/api/posts/comment/",
+      "/posts/comment/",
       {
         userId: params.userId,
         postId: postId,
@@ -127,7 +126,7 @@ const comment = async (params, credentials, postId, comment) => {
 const uncomment = async (params, credentials, postId, comment) => {
   try {
     let response = await axiosRequest.put(
-      "/api/posts/uncomment/",
+      "/posts/uncomment/",
       {
         userId: params.userId,
         postId: postId,

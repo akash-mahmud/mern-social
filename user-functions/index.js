@@ -9,7 +9,10 @@ const authCtrl = require("./function/controllers/auth.controller");
 const { connectToDatabase } = require("./function/models");
 const defaultMaxSize = "100kb"; // body-parser default
 const userCtrl = require("./function/controllers/user.controller");
-
+const cors = require("cors")
+app.use(cors({
+  origin:["http://localhost:3000" , "http://localhost:8000"]
+}));
 app.disable("x-powered-by");
 
 const rawLimit = process.env.MAX_RAW_SIZE || defaultMaxSize;
@@ -152,7 +155,7 @@ app.put(
   userCtrl.removeFollowing,
   userCtrl.removeFollower
 );
-app.put(
+app.get(
   "/users/findpeople/:userId",
   userCtrl.userByID,
   authCtrl.requireSignin,

@@ -13,7 +13,7 @@ const App = () => {
     }
   }, [])
   return (
-  <BrowserRouter>
+  <BrowserRouter  basename={"/function/frontend-function"}>
       <ThemeProvider theme={theme}>
         <MainRouter/>
       </ThemeProvider>

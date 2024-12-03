@@ -31,28 +31,17 @@ export default function Newsfeed() {
   const jwt = auth.isAuthenticated();
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    listNewsFeed(
-      {
-        userId: jwt.user._id,
-      },
-      {
-        t: jwt.token,
-      },
-      signal
-    ).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setPosts(data);
-      }
-    });
-    return function cleanup() {
-      abortController.abort();
+    listNewsFeed({ userId: jwt.user._id }, { t: jwt.token })
+      .then((data) => {
+        setPosts(data); // May cause React warnings if the component unmounts
+      })
+      .catch((err) => console.error(err));
+  
+    return () => {
+      // No cleanup here, request will continue even if the component unmounts
     };
   }, []);
+  
 
   const addPost = (post) => {
     const updatedPosts = [...posts];

@@ -3,7 +3,7 @@ import axiosRequest from "../utils/axiosRequest";
 const create = async (user) => {
   try {
     let response = await axiosRequest.post(
-      "/api/users/",
+      "/users/",
       { ...user },
       {
         headers: {
@@ -20,7 +20,7 @@ const create = async (user) => {
 
 const list = async (signal) => {
   try {
-    let response = await axiosRequest.get("/api/users/", {
+    let response = await axiosRequest.get("/users/", {
       signal: signal,
     });
     return response.data;
@@ -31,7 +31,7 @@ const list = async (signal) => {
 
 const read = async (params, credentials, signal) => {
   try {
-    let response = await axiosRequest("/api/users/" + params.userId, {
+    let response = await axiosRequest("/users/" + params.userId, {
       headers: {
         Authorization: "Bearer " + credentials.t,
       },
@@ -45,7 +45,7 @@ const read = async (params, credentials, signal) => {
 const update = async (params, credentials, user) => {
   try {
     let response = await axiosRequest.put(
-      "/api/users/" + params.userId,
+      "/users/" + params.userId,
       {
         ...user,
       },
@@ -63,7 +63,7 @@ const update = async (params, credentials, user) => {
 
 const remove = async (params, credentials) => {
   try {
-    let response = await axiosRequest.delete("/api/users/" + params.userId, {
+    let response = await axiosRequest.delete("/users/" + params.userId, {
       headers: {
         Authorization: "Bearer " + credentials.t,
       },
@@ -77,7 +77,7 @@ const remove = async (params, credentials) => {
 const follow = async (params, credentials, followId) => {
   try {
     let response = await axiosRequest.put(
-      "/api/users/follow/",
+      "/users/follow/",
       {
         userId: params.userId,
         followId: followId,
@@ -99,7 +99,7 @@ const follow = async (params, credentials, followId) => {
 const unfollow = async (params, credentials, unfollowId) => {
   try {
     let response = await axiosRequest.put(
-      "/api/users/unfollow/",
+      "/users/unfollow/",
       {
         userId: params.userId,
         unfollowId: unfollowId,
@@ -119,9 +119,9 @@ const unfollow = async (params, credentials, unfollowId) => {
 const findPeople = async (params, credentials, signal) => {
   try {
     let response = await axiosRequest.get(
-      "/api/users/findpeople/" + params.userId,
+      "/users/findpeople/" + params.userId,
       {
-        signal: signal,
+        // signal: signal,
         headers: {
           Authorization: "Bearer " + credentials.t,
         },

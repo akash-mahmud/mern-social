@@ -109,7 +109,7 @@ export default function Post(props) {
   return (
     <Card className={classes.card}>
       <CardHeader
-        avatar={<Avatar src={"/api/users/photo/" + props.post.postedBy._id} />}
+        avatar={<Avatar src={"/users/photo/" + props.post.postedBy._id} />}
         action={
           props.post.postedBy._id === auth.isAuthenticated().user._id && (
             <IconButton onClick={deletePost}>
@@ -133,7 +133,7 @@ export default function Post(props) {
           <div className={classes.photo}>
             <img
               className={classes.media}
-              src={"/api/posts/photo/" + props.post._id}
+              src={"/posts/photo/" + props.post._id}
             />
           </div>
         )}

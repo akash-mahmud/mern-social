@@ -69,9 +69,9 @@ export default function NewPost(props) {
     setValues({ ...values, user: auth.isAuthenticated().user });
   }, []);
   const clickPost = () => {
-    let postData = new FormData();
-    postData.append("text", values.text);
-    postData.append("photo", values.photo);
+    // let postData = new FormData();
+    // postData.append("text", values.text);
+    // postData.append("photo", values.photo);
     create(
       {
         userId: jwt.user._id,
@@ -79,7 +79,7 @@ export default function NewPost(props) {
       {
         t: jwt.token,
       },
-      postData
+      { ...values}
     ).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
@@ -94,8 +94,8 @@ export default function NewPost(props) {
     setValues({ ...values, [name]: value });
   };
   const photoURL = values.user._id
-    ? "/api/users/photo/" + values.user._id
-    : "/api/users/defaultphoto";
+    ? "/users/photo/" + values.user._id
+    : "/users/defaultphoto";
   return (
     <div className={classes.root}>
       <Card className={classes.card}>
