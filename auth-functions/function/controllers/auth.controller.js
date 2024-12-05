@@ -3,16 +3,14 @@ const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const config = require("../config/config");
 
-const signin = async (req, res, ) => {
+const signin = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-      return res
-        .status(401)
-        .json({
-          error: "User not found", 
-        });
+      return res.status(401).json({
+        error: "User not found",
+      });
     }
 
     if (!user.authenticate(req.body.password)) {
@@ -56,7 +54,7 @@ const hasAuthorization = (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
 
   if (!authorized) {
-    return res.status(403).succeed({
+    return res.status(403).json({
       error: "User is not authorized",
     });
   }

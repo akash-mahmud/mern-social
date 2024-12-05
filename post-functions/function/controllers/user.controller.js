@@ -13,7 +13,7 @@ const create = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -23,8 +23,6 @@ const create = async (req, res) => {
  */
 const userByID = async (req, res, next) => {
   try {
-
-
     let user = await User.findById(req.params.userId)
       .populate("following", "_id name")
       .populate("followers", "_id name")
@@ -34,7 +32,7 @@ const userByID = async (req, res, next) => {
       return res.status("400").json({
         error: "User not found",
       });
-      
+
     req.profile = user;
     next();
   } catch (err) {
@@ -58,29 +56,26 @@ const list = async (req, res) => {
     res.json(users);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
 
-const update = async(req, res) => {
+const update = async (req, res) => {
+  let user = req.profile;
+  user = extend(user, { ...req.body });
+  user.updated = Date.now();
 
-
-    let user = req.profile;
-    user = extend(user, {...req.body});
-    user.updated = Date.now();
-  
-    try {
-      await user.save();
-      user.hashed_password = undefined;
-      user.salt = undefined;
-      res.json(user);
-    } catch (err) {
-      return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
-      });
-    }
-
+  try {
+    await user.save();
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.json(user);
+  } catch (err) {
+    return res.status(400).json({
+      error: getErrorMessage(err),
+    });
+  }
 };
 
 const remove = async (req, res) => {
@@ -92,7 +87,7 @@ const remove = async (req, res) => {
     res.json(deletedUser);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -117,7 +112,7 @@ const addFollowing = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -137,7 +132,7 @@ const addFollower = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -150,7 +145,7 @@ const removeFollowing = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -169,7 +164,7 @@ const removeFollower = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -182,7 +177,7 @@ const findPeople = async (req, res) => {
     res.json(users);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };

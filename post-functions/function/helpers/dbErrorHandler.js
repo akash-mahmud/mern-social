@@ -18,7 +18,7 @@ exports.getUniqueErrorMessage = (err) => {
 /**
  * Get the error message from error object
  */
-const getErrorMessage = (err) => {
+exports. getErrorMessage = (err) => {
     let message = ''
 
     if (err.code) {

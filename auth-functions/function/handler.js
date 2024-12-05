@@ -2,7 +2,7 @@
 const authCtrl = require("./controllers/auth.controller");
 const { connectToDatabase } = require("./models/index");
 
-module.exports = async (event, context , _, req, res) => {
+module.exports = async (event, context, _, req, res) => {
   const method = event.method; // Get the HTTP method
   const path = event.path;
   await connectToDatabase();
@@ -35,7 +35,7 @@ module.exports = async (event, context , _, req, res) => {
         context
           .headers({ "Content-Type": "application/json" })
           .status(500)
-          .fail({
+          .json({
             message:
               "😡 Bad query: write something like that: hello/sum?numbers=10,20,12",
           });
@@ -45,12 +45,12 @@ module.exports = async (event, context , _, req, res) => {
       switch (method) {
         case "POST":
           try {
-            await authCtrl.signin(event, context ,  req, res);
+            await authCtrl.signin(event, context, req, res);
           } catch (error) {
             context
               .headers({ "Content-Type": "application/json" })
               .status(500)
-              .fail({
+              .json({
                 message:
                   "😡 Bad query: write something like that: hello/sum?numbers=10,20,12",
               });
@@ -61,7 +61,7 @@ module.exports = async (event, context , _, req, res) => {
           context
             .headers({ "Content-Type": "application/json" })
             .status(500)
-            .fail({
+            .json({
               message: "Unsupoorted request method",
             });
       }
@@ -71,12 +71,12 @@ module.exports = async (event, context , _, req, res) => {
       switch (method) {
         case "GET":
           try {
-             authCtrl.signout(event, context);
+            authCtrl.signout(event, context);
           } catch (error) {
             context
               .headers({ "Content-Type": "application/json" })
               .status(500)
-              .fail({
+              .json({
                 message: "something went wrong",
               });
           }
@@ -86,7 +86,7 @@ module.exports = async (event, context , _, req, res) => {
           context
             .headers({ "Content-Type": "application/json" })
             .status(500)
-            .fail({
+            .json({
               message: "Unsupoorted request method",
             });
           break;

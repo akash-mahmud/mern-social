@@ -93,12 +93,13 @@ export default function EditProfile({ match }) {
   }, [match.params.userId]);
 
   const clickSubmit = () => {
-    let userData = new FormData();
-    values.name && userData.append("name", values.name);
-    values.email && userData.append("email", values.email);
-    values.passoword && userData.append("passoword", values.passoword);
-    values.about && userData.append("about", values.about);
-    values.photo && userData.append("photo", values.photo);
+    let userData = {};
+    values.name ? (userData["name"] = values.name) : null;
+    values.email ? (userData["email"] = values.email) : null;
+    values?.passoword ? (userData["passoword"] = values?.passoword) : null;
+    values.about ? (userData["about"] = values.about) : null;
+    values.photo ? (userData["photo"] = values.photo) : null;
+
     update(
       {
         userId: match.params.userId,
@@ -106,7 +107,7 @@ export default function EditProfile({ match }) {
       {
         t: jwt.token,
       },
-      userData
+      { ...userData }
     ).then((data) => {
       if (data && data.error) {
         setValues({ ...values, error: data.error });

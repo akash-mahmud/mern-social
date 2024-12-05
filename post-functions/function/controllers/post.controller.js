@@ -1,5 +1,5 @@
+const { getErrorMessage } = require("../helpers/dbErrorHandler");
 const Post = require("../models/post.model");
-const errorHandler = require("../helpers/dbErrorHandler");
 const fs = require("fs");
 
 const create = async (req, res, next) => {
@@ -14,7 +14,7 @@ const create = async (req, res, next) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -47,7 +47,7 @@ const listByUser = async (req, res) => {
     res.json(posts);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -64,7 +64,7 @@ const listNewsFeed = async (req, res) => {
     res.json(posts);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -76,7 +76,7 @@ const remove = async (req, res) => {
     res.json(deletedPost);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -93,10 +93,12 @@ const like = async (req, res) => {
       { $push: { likes: req.body.userId } },
       { new: true }
     );
-    res.succeed(result);
+    res.json(result);
   } catch (err) {
-    return res.status(400).fail({
-      error: errorHandler.getErrorMessage(err),
+    console.log(err);
+
+    return res.status(400).json({
+      error: getErrorMessage(err),
     });
   }
 };
@@ -108,10 +110,10 @@ const unlike = async (req, res) => {
       { $pull: { likes: req.body.userId } },
       { new: true }
     );
-    res.succeed(result);
+    res.json(result);
   } catch (err) {
-    return res.status(400).fail({
-      error: errorHandler.getErrorMessage(err),
+    return res.status(400).json({
+      error: getErrorMessage(err),
     });
   }
 };
@@ -131,7 +133,7 @@ const comment = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -150,7 +152,7 @@ const uncomment = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };

@@ -6,7 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Icon from "@material-ui/core/Icon";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { comment, uncomment } from "./Post";
+import { comment, uncomment } from "./api-post";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

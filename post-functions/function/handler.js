@@ -4,8 +4,6 @@ const postCtrl = require("./controllers/post.controller");
 const authCtrl = require("./controllers/auth.controller");
 const { connectToDatabase } = require("./models/index");
 
-
-
 module.exports = async (event, context, _, req, res, next) => {
   const method = event.method; // Get the HTTP method
   const path = event.path;
@@ -19,7 +17,7 @@ module.exports = async (event, context, _, req, res, next) => {
         context
           .headers({ "Content-Type": "application/json" })
           .status(500)
-          .fail({
+          .json({
             message: "😡 Bad method: Method is not allowed",
           });
       }
@@ -39,7 +37,7 @@ module.exports = async (event, context, _, req, res, next) => {
         context
           .headers({ "Content-Type": "application/json" })
           .status(500)
-          .fail({
+          .json({
             message:
               "😡 Bad query: write something like that: hello/sum?numbers=10,20,12",
           });
@@ -55,7 +53,7 @@ module.exports = async (event, context, _, req, res, next) => {
             context
               .headers({ "Content-Type": "application/json" })
               .status(500)
-              .fail({
+              .json({
                 message:
                   "😡 Bad query: write something like that: hello/sum?numbers=10,20,12",
               });
@@ -76,7 +74,7 @@ module.exports = async (event, context, _, req, res, next) => {
           context
             .headers({ "Content-Type": "application/json" })
             .status(500)
-            .fail({
+            .json({
               message: "Unsupoorted request method",
             });
       }
@@ -91,8 +89,7 @@ module.exports = async (event, context, _, req, res, next) => {
           break;
         case path.includes("/posts/new"):
           if (method === httpMethods.POST) {
-            
-           await postCtrl.create(event, context, _, req, res, next);
+            await postCtrl.create(event, context, _, req, res, next);
           }
           break;
         case path.includes("/posts/feed"):

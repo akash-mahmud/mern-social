@@ -1,7 +1,7 @@
-const Post = require('../models/post.model');
-const errorHandler = require('../helpers/dbErrorHandler');
-const formidable = require('formidable');
-const fs = require('fs');
+const Post = require("../models/post.model");
+const formidable = require("formidable");
+const fs = require("fs");
+const { getErrorMessage } = require("../helpers/dbErrorHandler");
 
 const create = (req, res, next) => {
   let form = new formidable.IncomingForm();
@@ -23,7 +23,7 @@ const create = (req, res, next) => {
       res.json(result);
     } catch (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
+        error: getErrorMessage(err),
       });
     }
   });
@@ -31,7 +31,7 @@ const create = (req, res, next) => {
 
 const postByID = async (req, res, next, id) => {
   try {
-    let post = await Post.findById(id).populate('postedBy', '_id name').exec();
+    let post = await Post.findById(id).populate("postedBy", "_id name").exec();
     if (!post)
       return res.status(400).json({
         error: "Post not found",
@@ -48,14 +48,14 @@ const postByID = async (req, res, next, id) => {
 const listByUser = async (req, res) => {
   try {
     let posts = await Post.find({ postedBy: req.profile._id })
-      .populate('comments.postedBy', '_id name')
-      .populate('postedBy', '_id name')
-      .sort('-created')
+      .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
+      .sort("-created")
       .exec();
     res.json(posts);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -65,14 +65,14 @@ const listNewsFeed = async (req, res) => {
   following.push(req.profile._id);
   try {
     let posts = await Post.find({ postedBy: { $in: req.profile.following } })
-      .populate('comments.postedBy', '_id name')
-      .populate('postedBy', '_id name')
-      .sort('-created')
+      .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
+      .sort("-created")
       .exec();
     res.json(posts);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -84,7 +84,7 @@ const remove = async (req, res) => {
     res.json(deletedPost);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -104,7 +104,7 @@ const like = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -119,7 +119,7 @@ const unlike = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -133,13 +133,13 @@ const comment = async (req, res) => {
       { $push: { comments: comment } },
       { new: true }
     )
-      .populate('comments.postedBy', '_id name')
-      .populate('postedBy', '_id name')
+      .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
       .exec();
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -152,13 +152,13 @@ const uncomment = async (req, res) => {
       { $pull: { comments: { _id: comment._id } } },
       { new: true }
     )
-      .populate('comments.postedBy', '_id name')
-      .populate('postedBy', '_id name')
+      .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
       .exec();
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };

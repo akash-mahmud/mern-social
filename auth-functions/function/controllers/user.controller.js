@@ -1,8 +1,8 @@
 const User = require("../models/user.model");
 const extend = require("lodash/extend");
-const errorHandler = require('../helpers/dbErrorHandler');
 const formidable = require("formidable");
 const fs = require("fs");
+const { getErrorMessage } = require("../helpers/dbErrorHandler");
 // const profileImage = require("./../../client/assets/images/profile-pic.png");
 
 const create = async (req, res) => {
@@ -14,7 +14,7 @@ const create = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -24,8 +24,6 @@ const create = async (req, res) => {
  */
 const userByID = async (req, res, next) => {
   try {
-
-
     let user = await User.findById(req.params.userId)
       .populate("following", "_id name")
       .populate("followers", "_id name")
@@ -35,7 +33,7 @@ const userByID = async (req, res, next) => {
       return res.status("400").json({
         error: "User not found",
       });
-      
+
     req.profile = user;
     next();
   } catch (err) {
@@ -59,7 +57,7 @@ const list = async (req, res) => {
     res.json(users);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -87,7 +85,7 @@ const update = (req, res) => {
       res.json(user);
     } catch (err) {
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
+        error: getErrorMessage(err),
       });
     }
   });
@@ -102,7 +100,7 @@ const remove = async (req, res) => {
     res.json(deletedUser);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -127,7 +125,7 @@ const addFollowing = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -147,7 +145,7 @@ const addFollower = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -160,7 +158,7 @@ const removeFollowing = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -179,7 +177,7 @@ const removeFollower = async (req, res) => {
     res.json(result);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
@@ -192,7 +190,7 @@ const findPeople = async (req, res) => {
     res.json(users);
   } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: getErrorMessage(err),
     });
   }
 };
