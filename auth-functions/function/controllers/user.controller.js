@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 const extend = require("lodash/extend");
-const errorHandler = require("./../helpers/dbErrorHandler");
+const errorHandler = require('../helpers/dbErrorHandler');
 const formidable = require("formidable");
 const fs = require("fs");
 // const profileImage = require("./../../client/assets/images/profile-pic.png");

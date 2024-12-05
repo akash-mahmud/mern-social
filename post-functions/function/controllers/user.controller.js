@@ -1,7 +1,6 @@
 const User = require("../models/user.model");
 const extend = require("lodash/extend");
 const errorHandler = require("./../helpers/dbErrorHandler");
-const formidable = require("formidable");
 const fs = require("fs");
 // const profileImage = require("./../../client/assets/images/profile-pic.png");
 
@@ -64,22 +63,13 @@ const list = async (req, res) => {
   }
 };
 
-const update = (req, res) => {
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true;
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Photo could not be uploaded",
-      });
-    }
+const update = async(req, res) => {
+
+
     let user = req.profile;
-    user = extend(user, fields);
+    user = extend(user, {...req.body});
     user.updated = Date.now();
-    if (files.photo) {
-      user.photo.data = fs.readFileSync(files.photo.path);
-      user.photo.contentType = files.photo.type;
-    }
+  
     try {
       await user.save();
       user.hashed_password = undefined;
@@ -90,7 +80,7 @@ const update = (req, res) => {
         error: errorHandler.getErrorMessage(err),
       });
     }
-  });
+
 };
 
 const remove = async (req, res) => {

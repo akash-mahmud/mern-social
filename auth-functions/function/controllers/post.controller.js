@@ -1,32 +1,20 @@
 const Post = require('../models/post.model');
 const errorHandler = require('../helpers/dbErrorHandler');
-const formidable = require('formidable');
 const fs = require('fs');
 
-const create = (req, res, next) => {
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true;
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Image could not be uploaded",
-      });
-    }
+const create = async(req, res, next) => {
+  try {
+    let result = await post.save({...req.body});
+    res.json(result);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
     let post = new Post(fields);
     post.postedBy = req.profile;
-    if (files.photo) {
-      post.photo.data = fs.readFileSync(files.photo.path);
-      post.photo.contentType = files.photo.type;
-    }
-    try {
-      let result = await post.save();
-      res.json(result);
-    } catch (err) {
-      return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
-      });
-    }
-  });
+
+
 };
 
 const postByID = async (req, res, next, id) => {

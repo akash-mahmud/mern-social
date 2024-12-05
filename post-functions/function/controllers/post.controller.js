@@ -1,8 +1,6 @@
 const Post = require("../models/post.model");
 const errorHandler = require("../helpers/dbErrorHandler");
-const formidable = require("formidable");
 const fs = require("fs");
-const { connectToDatabase } = require("../models");
 
 const create = async (req, res, next) => {
   let post = new Post({ ...req.body });
