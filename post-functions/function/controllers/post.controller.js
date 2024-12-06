@@ -1,4 +1,4 @@
-const { serverlessBehaviour } = require("../../config/utils");
+const { serverlessBehaviour } = require("../config/utils");
 const { getErrorMessage } = require("../helpers/dbErrorHandler");
 const Post = require("../models/post.model");
 const fs = require("fs");

@@ -3,7 +3,7 @@ const extend = require("lodash/extend");
 const formidable = require("formidable");
 const fs = require("fs");
 const { getErrorMessage } = require("../helpers/dbErrorHandler");
-const { serverlessBehaviour } = require("../../config/utils");
+const { serverlessBehaviour } = require("../config/utils");
 
 // const profileImage = require("./../../client/assets/images/profile-pic.png");
 
