@@ -3,10 +3,13 @@ const extend = require("lodash/extend");
 const formidable = require("formidable");
 const fs = require("fs");
 const { getErrorMessage } = require("../helpers/dbErrorHandler");
+const { serverlessBehaviour } = require("../../config/utils");
 
 // const profileImage = require("./../../client/assets/images/profile-pic.png");
 
 const create = async (req, res) => {
+  await serverlessBehaviour()
+
   const user = new User(req.body);
   try {
     await user.save();
@@ -54,6 +57,8 @@ const read = (req, res) => {
 
 const list = async (req, res) => {
   try {
+    await serverlessBehaviour()
+
     let users = await User.find().select("name email updated created");
     res.json(users);
   } catch (err) {

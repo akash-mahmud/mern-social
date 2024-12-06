@@ -1,8 +1,11 @@
+const { serverlessBehaviour } = require("../../config/utils");
 const { getErrorMessage } = require("../helpers/dbErrorHandler");
 const Post = require("../models/post.model");
 const fs = require("fs");
 
 const create = async (req, res, next) => {
+  await serverlessBehaviour()
+
   let post = new Post({ ...req.body });
   post.postedBy = req.profile;
   // if (files.photo) {
@@ -53,6 +56,7 @@ const listByUser = async (req, res) => {
 };
 
 const listNewsFeed = async (req, res) => {
+  await serverlessBehaviour()
   let following = req.profile.following;
   following.push(req.profile._id);
   try {
@@ -88,6 +92,8 @@ const photo = (req, res, next) => {
 
 const like = async (req, res) => {
   try {
+    await serverlessBehaviour()
+
     let result = await Post.findByIdAndUpdate(
       req.body.postId,
       { $push: { likes: req.body.userId } },
@@ -105,6 +111,8 @@ const like = async (req, res) => {
 
 const unlike = async (req, res) => {
   try {
+    await serverlessBehaviour()
+
     let result = await Post.findByIdAndUpdate(
       req.body.postId,
       { $pull: { likes: req.body.userId } },
@@ -119,6 +127,8 @@ const unlike = async (req, res) => {
 };
 
 const comment = async (req, res) => {
+  await serverlessBehaviour()
+
   let comment = req.body.comment;
   comment.postedBy = req.body.userId;
   try {
@@ -139,6 +149,8 @@ const comment = async (req, res) => {
 };
 
 const uncomment = async (req, res) => {
+  await serverlessBehaviour()
+
   let comment = req.body.comment;
   try {
     let result = await Post.findByIdAndUpdate(
