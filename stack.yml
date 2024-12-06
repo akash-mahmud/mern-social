@@ -1,7 +1,7 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: http://206.189.248.140:8080
+  gateway: http://209.38.112.33:8080
 functions:
   auth-function:
     lang: dockerfile
