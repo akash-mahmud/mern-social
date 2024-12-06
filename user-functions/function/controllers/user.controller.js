@@ -8,7 +8,7 @@ const { serverlessBehaviour } = require("../config/utils");
 // const profileImage = require("./../../client/assets/images/profile-pic.png");
 
 const create = async (req, res) => {
-  await serverlessBehaviour()
+  await serverlessBehaviour();
 
   const user = new User(req.body);
   try {
@@ -57,9 +57,13 @@ const read = (req, res) => {
 
 const list = async (req, res) => {
   try {
-    await serverlessBehaviour()
+    await serverlessBehaviour();
+    // const skip = (req.query.page ?? 1) - 1;
 
-    let users = await User.find().select("name email updated created");
+    let users = await User.find()
+      .select("name email updated created")
+      // .skip(skip * 10)
+      // .limit(10);
     res.json(users);
   } catch (err) {
     return res.status(400).json({

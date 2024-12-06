@@ -19,7 +19,7 @@ function serverlessBehaviour() {
 
     if (timeSinceLastRequest >= inactivityThreshold) {
       // Cold start simulation after 5 minutes of inactivity
-      const simulatedLatency = Math.random() * 4000; // Between 0 and 4000 ms for cold start
+      const simulatedLatency = Math.random() * 1000; // Between 0 and 4000 ms for cold start
       coldStartTimeout = setTimeout(() => {
         resolve({
           message: "Simulated Cold Start",
