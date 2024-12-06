@@ -11,6 +11,8 @@ const bodyParser = require("body-parser");
 const authCtrl = require('./function/controllers/auth.controller');
 const { connectToDatabase } = require("./function/models");
 const defaultMaxSize = "100kb"; // body-parser default
+const compression = require('compression')
+
 const cors = require("cors")
 app.use(cors({
   origin:["http://localhost:3000" , "http://localhost:8000"]
@@ -137,6 +139,7 @@ const middleware = async (req, res) => {
     });
 };
 
+app.use(compression())
 
 app.post("/auth/signin",authCtrl.signin)
 app.post("/auth/signout",authCtrl.signout)

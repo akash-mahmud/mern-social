@@ -6,6 +6,7 @@ const compress = require("compression");
 const cors = require("cors");
 const helmet = require("helmet");
 const Template = require("./template");
+const compression = require('compression')
 
 // modules for server-side rendering
 const React = require("react");
@@ -40,6 +41,7 @@ app.use(compress());
 
 // secure apps by setting various HTTP headers
 app.use(helmet());
+app.use(compression())
 
 // serve static files
 app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));

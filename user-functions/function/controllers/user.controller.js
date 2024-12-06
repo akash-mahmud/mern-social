@@ -58,12 +58,12 @@ const read = (req, res) => {
 const list = async (req, res) => {
   try {
     await serverlessBehaviour();
-    // const skip = (req.query.page ?? 1) - 1;
+    const skip = (req.query.page ?? 1) - 1;
 
     let users = await User.find()
       .select("name email updated created")
-      // .skip(skip * 10)
-      // .limit(10);
+      .skip(skip * 10)
+      .limit(10);
     res.json(users);
   } catch (err) {
     return res.status(400).json({

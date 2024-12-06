@@ -10,6 +10,8 @@ const { connectToDatabase } = require("./function/models");
 const defaultMaxSize = "100kb"; // body-parser default
 const userCtrl = require("./function/controllers/user.controller");
 const cors = require("cors")
+const compression = require('compression')
+
 app.use(cors({
   origin:["http://localhost:3000" , "http://localhost:8000"]
 }));
@@ -27,6 +29,7 @@ app.use(function addDefaultContentType(req, res, next) {
   }
   next();
 });
+app.use(compression())
 
 if (process.env.RAW_BODY === "true") {
   app.use(bodyParser.raw({ type: "*/*", limit: rawLimit }));

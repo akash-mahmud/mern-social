@@ -22,7 +22,6 @@
     "build": " webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
     "start": "NODE_ENV=production node ./dist/server.generated.js"
   },
-
   "devDependencies": {
     "@babel/core": "7.9.0",
     "@babel/preset-env": "7.9.0",
@@ -42,7 +41,7 @@
     "@material-ui/icons": "4.9.1",
     "axios": "^1.7.7",
     "body-parser": "1.19.0",
-    "compression": "1.7.4",
+    "compression": "^1.7.5",
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
     "dotenv": "^16.4.5",
