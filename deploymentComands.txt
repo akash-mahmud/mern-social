@@ -6,3 +6,7 @@
 1. git switch unoptimized
 2. build all 4 functions
 3. faas-cli deploy
+
+
+for geting response time
+curl -o /dev/null -s -w 'Total: %{time_total}s\n'  localhost:3000/users  
