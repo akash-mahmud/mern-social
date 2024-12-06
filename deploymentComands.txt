@@ -3,6 +3,6 @@
 3. faas-cli deploy
 
 
-1. git switch unotimized
+1. git switch unoptimized
 2. build all 4 functions
 3. faas-cli deploy
