@@ -4,11 +4,13 @@ let coldStartTimeout;
 function serverlessBehaviour() {
     return new Promise((resolve) => {
         // Simulate the cold start behavior after 5 minutes of inactivity
-        const inactivityThreshold = 5 * 60 * 1000; // 5 minutes
+        // const inactivityThreshold = 5 * 60 * 1000; // 5 minutes
+        const inactivityThreshold = 10 *  1000; // 5 minutes
+
 
         const currentTime = Date.now();
         const timeSinceLastRequest = currentTime - lastRequestTime;
-
+      
         // Clear any existing cold start timeout
         clearTimeout(coldStartTimeout);
 
@@ -21,12 +23,16 @@ function serverlessBehaviour() {
                     time: `${simulatedLatency.toFixed(2)} ms`,
                 });
             }, simulatedLatency);
+            console.log("function cold");
+
         } else {
             // Warm start, no delay if the function is still warm
             resolve({
                 message: "Simulated Warm Start (No Delay)",
                 time: "0 ms",
             });
+            console.log("function warm");
+            
         }
 
         // Update the last request time to now
