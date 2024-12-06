@@ -10,6 +10,7 @@ const authCtrl = require("./function/controllers/auth.controller");
 const userCtrl = require("./function/controllers/user.controller");
 const postCtrl = require("./function/controllers/post.controller");
 const { connectToDatabase } = require("./function/models");
+const compression = require('compression')
 
 const defaultMaxSize = "100kb"; // body-parser default
 
@@ -30,6 +31,7 @@ app.use(function addDefaultContentType(req, res, next) {
   }
   next();
 });
+app.use(compression())
 
 if (process.env.RAW_BODY === "true") {
   app.use(bodyParser.raw({ type: "*/*", limit: rawLimit }));

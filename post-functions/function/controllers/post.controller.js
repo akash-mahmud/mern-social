@@ -1,10 +1,9 @@
 const { serverlessBehaviour } = require("../config/utils");
 const { getErrorMessage } = require("../helpers/dbErrorHandler");
 const Post = require("../models/post.model");
-const fs = require("fs");
 
 const create = async (req, res, next) => {
-  await serverlessBehaviour()
+  await serverlessBehaviour();
 
   let post = new Post({ ...req.body });
   post.postedBy = req.profile;
@@ -42,10 +41,14 @@ const postByID = async (req, res, next) => {
 
 const listByUser = async (req, res) => {
   try {
+    const skip = (req.query.page ?? 1) - 1;
+
     let posts = await Post.find({ postedBy: req.profile._id })
       .populate("comments.postedBy", "_id name")
       .populate("postedBy", "_id name")
       .sort("-created")
+      .skip(skip * 10)
+      .limit(10)
       .exec();
     res.json(posts);
   } catch (err) {
@@ -56,14 +59,18 @@ const listByUser = async (req, res) => {
 };
 
 const listNewsFeed = async (req, res) => {
-  await serverlessBehaviour()
+  await serverlessBehaviour();
   let following = req.profile.following;
   following.push(req.profile._id);
   try {
+    const skip = (req.query.page ?? 1) - 1;
+
     let posts = await Post.find({ postedBy: { $in: req.profile.following } })
       .populate("comments.postedBy", "_id name")
       .populate("postedBy", "_id name")
       .sort("-created")
+      .skip(skip * 10)
+      .limit(10)
       .exec();
     res.json(posts);
   } catch (err) {
@@ -92,7 +99,7 @@ const photo = (req, res, next) => {
 
 const like = async (req, res) => {
   try {
-    await serverlessBehaviour()
+    await serverlessBehaviour();
 
     let result = await Post.findByIdAndUpdate(
       req.body.postId,
@@ -111,7 +118,7 @@ const like = async (req, res) => {
 
 const unlike = async (req, res) => {
   try {
-    await serverlessBehaviour()
+    await serverlessBehaviour();
 
     let result = await Post.findByIdAndUpdate(
       req.body.postId,
@@ -127,7 +134,7 @@ const unlike = async (req, res) => {
 };
 
 const comment = async (req, res) => {
-  await serverlessBehaviour()
+  await serverlessBehaviour();
 
   let comment = req.body.comment;
   comment.postedBy = req.body.userId;
@@ -149,7 +156,7 @@ const comment = async (req, res) => {
 };
 
 const uncomment = async (req, res) => {
-  await serverlessBehaviour()
+  await serverlessBehaviour();
 
   let comment = req.body.comment;
   try {
