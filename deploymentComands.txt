@@ -1,0 +1,8 @@
+1. git switch optimized
+2. build all 4 functions
+3. faas-cli deploy
+
+
+1. git switch unotimized
+2. build all 4 functions
+3. faas-cli deploy
