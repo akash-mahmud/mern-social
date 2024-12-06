@@ -4,8 +4,8 @@ let coldStartTimeout;
 function serverlessBehaviour() {
     return new Promise((resolve) => {
         // Simulate the cold start behavior after 5 minutes of inactivity
-        // const inactivityThreshold = 5 * 60 * 1000; // 5 minutes
-        const inactivityThreshold = 10 *  1000; // 5 minutes
+        const inactivityThreshold = 5 * 60 * 1000; // 5 minutes
+        // const inactivityThreshold = 10 *  1000; 
 
 
         const currentTime = Date.now();
